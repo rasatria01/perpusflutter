@@ -155,7 +155,7 @@ class CardBook extends StatelessWidget {
                 image: DecorationImage(
                   image: x,
                   fit: BoxFit.fitWidth,
-                  alignment: Alignment.topCenter,
+                  alignment: Alignment.bottomCenter,
                 ),
               ),
             ),

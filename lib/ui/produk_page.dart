@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:perpusflutter/models/book.dart';
+import 'package:perpusflutter/ui/detail_page.dart';
 
 class ProdukPage extends StatefulWidget {
   const ProdukPage({super.key});
@@ -53,14 +54,18 @@ class _ProdukPageState extends State<ProdukPage> {
                 id: 2,
                 judul: "Sepenggal Kisah Anak Rantau",
                 pengarang: "Ketut Susilo",
+                sinopsis:
+                    "\"Sepenggal Kisah Anak Rantau\" adalah sebuah kisah yang mengharukan dan menginspirasi tentang perjalanan hidup seorang anak yang mencari jati dirinya dan menemukan arti sebenarnya dari hidup yang mengisahkan tentang perjalanan hidup seorang anak bernama Rantau yang tumbuh di pedesaan. Rantau adalah anak yang cerdas dan penuh semangat, namun ia harus menghadapi berbagai kesulitan dan rintangan dalam hidupnya.",
                 gambar: "assets/Sepenggal Kisah Anak Rantau_02.jpeg",
               ),
             ),
             CardBook(
               book: Book(
                 id: 3,
-                judul: "Sepenggal Kisah Anak Rantau",
+                judul: "Si Merah di Simpang Republik",
                 pengarang: "Ketut Susilo",
+                sinopsis:
+                    "\"Si Merah di Simpang Republik\" adalah sebuah buku yang mengisahkan tentang perjalanan hidup seorang aktivis politik yang berjuang untuk memperjuangkan hak-hak rakyat dan menentang kesewenang-wenangan pemerintah. Dalam cerita ini, sang aktivis, yang dijuluki \"Si Merah\", harus menghadapi berbagai rintangan dan tantangan dalam perjuangannya.",
                 gambar: "assets/si merah_03.jpeg",
               ),
             ),
@@ -101,7 +106,16 @@ class CardBook extends StatelessWidget {
         ? const AssetImage("assets/placeholder.gif")
         : AssetImage(book.gambar);
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => BookDetail(
+              book: book,
+            ),
+          ),
+        );
+      },
       child: Container(
         width: MediaQuery.of(context).size.width,
         height: 160,

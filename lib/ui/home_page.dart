@@ -64,7 +64,7 @@ class HomePage extends StatelessWidget {
                     duration: const Duration(milliseconds: 1500),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(150, 35),
+                        minimumSize: const Size(200, 35),
                         side: const BorderSide(color: Colors.white),
                       ),
                       onPressed: () {
@@ -99,7 +99,7 @@ class HomePage extends StatelessWidget {
                       style: OutlinedButton.styleFrom(
                         backgroundColor:
                             Theme.of(context).colorScheme.inversePrimary,
-                        minimumSize: const Size(150, 35),
+                        minimumSize: const Size(200, 35),
                       ),
                       child: const Text(
                         "Register",

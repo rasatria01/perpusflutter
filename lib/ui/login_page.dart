@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:perpusflutter/ui/produk_page.dart';
 import 'package:perpusflutter/ui/registrasi_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -163,6 +164,8 @@ class _LoginPageState extends State<LoginPage> {
       ),
       onPressed: () {
         _formKey.currentState?.validate();
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const ProdukPage()));
       },
     );
   }

@@ -60,11 +60,15 @@ class CardBook extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        book.judul,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                      SizedBox(
+                        height: 25,
+                        child: Text(
+                          book.judul,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            overflow: TextOverflow.clip,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                       Text(

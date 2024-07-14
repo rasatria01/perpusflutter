@@ -1,10 +1,25 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:perpusflutter/models/user.dart';
 import 'package:perpusflutter/ui/login_page.dart';
 import 'package:perpusflutter/ui/registrasi_page.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class WelcomePage extends StatefulWidget {
+  const WelcomePage({super.key});
+
+  @override
+  State<WelcomePage> createState() => _WelcomePageState();
+}
+
+class _WelcomePageState extends State<WelcomePage> {
+  final _account = [
+    User(email: "admin@admin.com", password: "1234", username: "Admin"),
+  ];
+  RegisterAccount(User user) {
+    setState(() {
+      _account.add(user);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +86,10 @@ class HomePage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const LoginPage(),
+                            builder: (context) => LoginPage(
+                              users: _account,
+                              regist: RegisterAccount,
+                            ),
                           ),
                         );
                       },
@@ -92,7 +110,10 @@ class HomePage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const RegistrasiPage(),
+                            builder: (context) => RegistrasiPage(
+                              users: _account,
+                              regist: RegisterAccount,
+                            ),
                           ),
                         );
                       },

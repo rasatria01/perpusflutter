@@ -1,17 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:perpusflutter/models/book.dart';
 
 class BookDetail extends StatefulWidget {
   final Book book;
-
-  const BookDetail({super.key, required this.book});
+  final Function callbackRead;
+  final Function callbackRemove;
+  final bool isRead;
+  const BookDetail(
+      {super.key,
+      required this.book,
+      required this.callbackRead,
+      required this.callbackRemove,
+      this.isRead = false});
 
   @override
   State<BookDetail> createState() => _BookDetailState();
 }
 
 class _BookDetailState extends State<BookDetail> {
+  var status = false;
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      status = widget.isRead;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,9 +92,53 @@ class _BookDetailState extends State<BookDetail> {
                   ),
                   Text(
                     widget.book.pengarang,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {},
+                        child: const Text("Read"),
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      status
+                          ? ElevatedButton(
+                              onPressed: () {
+                                widget.callbackRemove(widget.book);
+                                setState(() {
+                                  status = !status;
+                                });
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.red),
+                              child: const Text("Remove"),
+                            )
+                          : ElevatedButton(
+                              onPressed: () {
+                                widget.callbackRead(widget.book);
+                                setState(() {
+                                  status = !status;
+                                });
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Theme.of(context)
+                                      .colorScheme
+                                      .inversePrimary),
+                              child: const Text("Add"),
+                            )
+                    ],
                   ),
                   Expanded(
-                    child: Container(
+                    child: SizedBox(
                       width: MediaQuery.of(context).size.width - 32,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,7 +153,30 @@ class _BookDetailState extends State<BookDetail> {
                         ],
                       ),
                     ),
-                  )
+                  ),
+                  Container(
+                    alignment: Alignment.bottomRight,
+                    child: RatingStars(
+                      value: widget.book.star,
+                      starSize: 20,
+                      valueLabelColor: const Color(0xff9b9b9b),
+                      valueLabelTextStyle: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w400,
+                          fontStyle: FontStyle.normal,
+                          fontSize: 12.0),
+                      valueLabelRadius: 10,
+                      maxValue: 5,
+                      maxValueVisibility: true,
+                      valueLabelVisibility: true,
+                      animationDuration: const Duration(milliseconds: 1000),
+                      valueLabelPadding: const EdgeInsets.symmetric(
+                          vertical: 1, horizontal: 8),
+                      valueLabelMargin: const EdgeInsets.only(right: 8),
+                      starOffColor: const Color(0xffe7e8ea),
+                      starColor: Colors.yellow,
+                    ),
+                  ),
                 ],
               ),
             )

@@ -1,10 +1,13 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:perpusflutter/ui/produk_page.dart';
+import 'package:perpusflutter/models/user.dart';
+import 'package:perpusflutter/ui/main_page.dart';
 import 'package:perpusflutter/ui/registrasi_page.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  final List<User> users;
+  final Function regist;
+  const LoginPage({super.key, required this.users, required this.regist});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -163,9 +166,34 @@ class _LoginPageState extends State<LoginPage> {
         style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
       ),
       onPressed: () {
-        _formKey.currentState?.validate();
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const ProdukPage()));
+        var found = false;
+        if (_formKey.currentState!.validate()) {
+          var email = _emailTextController.text;
+          var password = _passwordTextController.text;
+          for (var element in widget.users) {
+            if (element.email == email) {
+              found = true;
+              if (element.password == password) {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                      builder: (context) => HomePage(
+                            user: element,
+                          )),
+                  (Route<dynamic> route) => false,
+                );
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Error Password is MissMatch')),
+                );
+              }
+            }
+          }
+          if (found == false) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Account Not found')),
+            );
+          }
+        }
       },
     );
   }
@@ -177,8 +205,13 @@ class _LoginPageState extends State<LoginPage> {
         style: TextStyle(color: Colors.blue),
       ),
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const RegistrasiPage()));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => RegistrasiPage(
+                      users: widget.users,
+                      regist: widget.regist,
+                    )));
       },
     );
   }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:perpusflutter/ui/home_page.dart';
+import 'package:perpusflutter/ui/welcome_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const HomePage(),
+      home: const WelcomePage(),
     );
   }
 }

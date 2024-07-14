@@ -1,9 +1,13 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:perpusflutter/models/user.dart';
 import 'package:perpusflutter/ui/login_page.dart';
 
 class RegistrasiPage extends StatefulWidget {
-  const RegistrasiPage({super.key});
+  final List<User> users;
+  final Function regist;
+
+  const RegistrasiPage({super.key, required this.users, required this.regist});
 
   @override
   State<RegistrasiPage> createState() => _RegistrasiPageState();
@@ -182,7 +186,24 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
     return ElevatedButton(
         child: const Text("Registrasi"),
         onPressed: () {
-          _formKey.currentState!.validate();
+          if (_formKey.currentState!.validate()) {
+            var email = _emailTextController.text;
+            var password = _passwordTextController.text;
+
+            var data = User(
+              email: email,
+              password: password,
+              username: _namaTextController.text,
+            );
+            widget.regist(data);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => LoginPage(
+                          users: widget.users,
+                          regist: widget.regist,
+                        )));
+          }
         });
   }
 
@@ -193,8 +214,13 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
         style: TextStyle(color: Colors.blue),
       ),
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const LoginPage()));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => LoginPage(
+                      users: widget.users,
+                      regist: widget.regist,
+                    )));
       },
     );
   }
